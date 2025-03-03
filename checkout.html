@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Checkout - Raf</title>
+    <meta name="keywords" content="Checkout, Payment, Shipping">
+    <meta name="description" content="Complete your purchase securely and easily.">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" href="images/fevicon.png" type="image/gif">
+</head>
+
+<body class="main-layout checkout-page-bg">
+
+    <header>
+
+    </header>
+
+    <div class="checkout-title-bg" style="margin-top: 130px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="title text-center">
+                        <h1 style="margin-top: 20px;">Checkout</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h3>Billing Details</h3>
+                    <form id="checkout-form" method="POST" action="submit_order.php">
+
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="street">Street</label>
+                            <input type="text" class="form-control" id="street" name="street"
+                                placeholder="Enter your street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Enter your city"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Shipping Address Details</label>
+                            <textarea class="form-control" id="address" name="address" rows="3"
+                                placeholder="Enter your shipping address details" required></textarea>
+                        </div>
+
+
+                        <input type="hidden" id="total_price" name="total_price" value="0">
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>Your Order</h3>
+                    <div class="order-summary">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-summary-items">
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-right"><strong>Total:</strong></td>
+                                    <td id="order-total"><strong></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <button type="submit" form="checkout-form" class="btn btn-success btn-block">Place Order</button>
+                    <a href="cart.html" class="btn btn-outline-secondary btn-block">Back to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 50px;">
+
+    </footer>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/html/header.js"></script>
+    <script src="js/html/footer.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'get_order_details.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    let orderSummaryHtml = '';
+                    let totalPrice = 0;
+                    data.order_details.forEach(item => {
+                        let itemPrice = item.isRental == 1 ? '$' + item.bookPrice + ' (Rental)' : '$' + item.bookPrice;
+                        orderSummaryHtml += `
+                          <tr>
+                              <td>${item.bookTitle}</td>
+                              <td>${item.quantity}</td>
+                              <td>${itemPrice}</td>
+                              <td>$${item.total}</td>
+                          </tr>
+                      `;
+                        totalPrice += parseFloat(item.total);
+                    });
+
+                    // Insert order items into the table
+                    $('#order-summary-items').html(orderSummaryHtml);
+
+                    // Update total price
+                    $('#order-total').html('$' + totalPrice.toFixed(2));
+
+                    // Set the total price in the hidden field
+                    $('#total_price').val(totalPrice.toFixed(2));  // Update the hidden field with the total price
+                },
+                error: function () {
+                    alert('Error fetching order details.');
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

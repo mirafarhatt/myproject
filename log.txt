@@ -1,0 +1,160 @@
+Array
+(
+    [userId] => 2
+    [bookId] => 4
+    [rentalPrice] => 5.4
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 3
+    [rentalPrice] => 4.3
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 4
+    [rentalPrice] => 5.4
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 6
+    [rentalPrice] => 3.6
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 6
+    [rentalPrice] => 3.6
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 2
+    [rentalPrice] => 2
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 3
+    [rentalPrice] => 4.30
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 3
+    [rentalPrice] => 4.30
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 5
+    [rentalPrice] => 1.50
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 5
+    [rentalPrice] => 1.50
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 2
+    [rentalPrice] => 2.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 6
+    [rentalPrice] => 3.60
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 6
+    [rentalPrice] => 3.60
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 4
+    [rentalPrice] => 5.40
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 1
+    [bookId] => 3
+    [rentalPrice] => 5.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 1
+    [bookId] => 4
+    [rentalPrice] => 3.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 2
+    [bookId] => 5
+    [rentalPrice] => 3.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 4
+    [bookId] => 1
+    [rentalPrice] => 4.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 4
+    [bookId] => 1
+    [rentalPrice] => 4.00
+    [isRental] => 1
+    [quantity] => 1
+)
+Array
+(
+    [userId] => 4
+    [bookId] => 1
+    [rentalPrice] => 4.00
+    [isRental] => 1
+    [quantity] => 1
+)

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Cart - Raf</title>
+    <meta name="keywords" content="Shopping Cart, Books, Checkout">
+    <meta name="description" content="View the items in your cart and proceed to checkout.">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" href="images/fevicon.png" type="image/gif">
+</head>
+
+<body class="main-layout Cart-bg">
+    <header></header>
+
+    <div class="cart-page-bg" style="margin-top: 150px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="cart-title text-center">
+                        <h2>Your Shopping Cart</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cart-table table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-items">
+                                <!-- Cart items will be injected here by JavaScript -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                                    <td colspan="2" id="cart-total"><strong></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="cart-actions text-right" style="margin-right: 350px;">
+                        <a href="library.php" class="btn btn-outline-dark"
+                            style="background-color: rgb(205, 0, 0);border-color: rgb(255, 255, 255);">
+                            <p style="color: rgb(255, 255, 255);">Continue Shopping</p>
+                        </a>
+                        <a href="checkout.html" class="btn btn-primary"
+                            style="background-color: rgb(114, 38, 185);border-color: rgb(255, 255, 255);">Proceed to
+                            Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 50px;"></footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/html/footer.js"></script>
+    <script src="js/html/header.js"></script>
+    <script>
+        window.onload = function () {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            // Fetch cart items from the server
+            fetch('getcart.php') // This file will fetch cart data from the database
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const cart = data.cart;
+                        if (cart.length === 0) {
+                            cartItemsContainer.innerHTML = '<tr><td colspan="5" class="text-center">Your cart is empty.</td></tr>';
+                        } else {
+                            let total = 0;
+                            cartItemsContainer.innerHTML = ''; // Clear existing items
+
+                            cart.forEach(item => {
+                                const subtotal = item.price * item.quantity;
+                                total += subtotal;
+
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                            <td>
+                                <div class="cart-item">
+                                    <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 70px;">
+                                    <span>${item.title}</span>
+                                </div>
+                            </td>
+                            <td>$${item.price.toFixed(2)}</td>
+                            <td>
+                                <input type="number" value="${item.quantity}" min="1" class="form-control cart-quantity"
+                                    data-id="${item.id}" onchange="updateQuantity(this)">
+                            </td>
+                            <td class="subtotal">$${subtotal.toFixed(2)}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeItem('${item.id}')">Remove</button>
+                            </td>
+                        `;
+                                cartItemsContainer.appendChild(row);
+                            });
+
+                            cartTotalElement.innerText = `$${total.toFixed(2)}`;
+                        }
+                    } else {
+                        alert('Failed to load cart items.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching cart:', error);
+                    alert('Error fetching cart data.');
+                });
+        };
+
+        // Remove item from the cart
+        function removeItem(bookId) {
+            if (!confirm('Are you sure you want to remove this item?')) return;
+
+            fetch('remove_from_cart.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ book_id: bookId }) // Send the book ID to the server
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Item removed successfully.');
+
+                        // Remove the item's row from the cart table
+                        const row = document.querySelector(`button[onclick="removeItem('${bookId}')"]`).closest('tr');
+                        row.remove();
+
+                        // Update the total
+                        updateCartTotal();
+                    } else {
+                        alert(data.message || 'Failed to remove item.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error removing item:', error);
+                    alert('Error removing item from cart.');
+                });
+        }
+
+        // Update item quantity
+        function updateQuantity(input) {
+            const bookId = input.getAttribute('data-id');
+            const quantity = parseInt(input.value, 10);
+
+            if (quantity <= 0) {
+                alert('Quantity must be at least 1.');
+                input.value = 1; // Reset to minimum value
+                return;
+            }
+
+            fetch('update_cart_quantity.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ book_id: bookId, quantity: quantity }) // Send updated quantity to the server
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Quantity updated successfully.');
+
+                        // Update subtotal for the row
+                        const row = input.closest('tr');
+                        const price = parseFloat(row.querySelector('td:nth-child(2)').textContent.replace('$', ''));
+                        const subtotal = price * quantity;
+                        row.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
+
+                        // Update the total
+                        updateCartTotal();
+                    } else {
+                        alert(data.message || 'Failed to update quantity.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity:', error);
+                    alert('Error updating item quantity.');
+                });
+        }
+
+        // Update the total cart value
+        function updateCartTotal() {
+            let total = 0;
+
+            document.querySelectorAll('#cart-items .subtotal').forEach(subtotalElement => {
+                const subtotal = parseFloat(subtotalElement.textContent.replace('$', '')) || 0;
+                total += subtotal;
+            });
+
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+    </script>
+
+</body>
+
+</html>

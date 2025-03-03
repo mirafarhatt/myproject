@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <title>Graphic Design Services - Raf </title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/responsive.css">
+   <link rel="icon" href="images/fevicon.png" type="image/gif">
+   <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      body {
+         font-family: 'Roboto', Arial, sans-serif;
+         background: linear-gradient(135deg, #f3e7e9, #e3eeff);
+         color: #4a4a4a;
+         padding-top: 50px;
+
+      }
+
+
+      .abouttitle h1 {
+         margin-top: 100px;
+         font-size: 2.8rem;
+         font-weight: bold;
+         text-transform: uppercase;
+         text-align: center;
+         color: #6a1b9a;
+         /* Purple */
+         letter-spacing: 2px;
+
+         padding-top: 20px;
+      }
+
+
+      .services-form {
+         padding: 50px 20px;
+         border-radius: 8px;
+         background: #ffffff;
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+         margin: 40px auto;
+         max-width: 800px;
+      }
+
+      .services-form h2 {
+         font-size: 1.8rem;
+         margin-bottom: 20px;
+         text-align: center;
+         color: #333;
+      }
+
+
+      .services-form .form-group {
+         margin-bottom: 20px;
+      }
+
+      .services-form label {
+         font-size: 1.1rem;
+         font-weight: 500;
+         color: #6a1b9a;
+         margin-bottom: 8px;
+         display: block;
+      }
+
+      .services-form .form-control,
+      .services-form .form-control-file {
+         width: 100%;
+         padding: 10px;
+         border-radius: 6px;
+         border: 1px solid #ccc;
+         font-size: 1rem;
+         transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .services-form .form-control:focus {
+         border-color: #6a1b9a;
+         box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
+         outline: none;
+      }
+
+      .services-form textarea {
+         resize: vertical;
+         min-height: 100px;
+      }
+
+
+      .services-form button {
+         background: linear-gradient(to right, #6a1b9a, #9c27b0);
+         color: white;
+         padding: 12px 25px;
+         font-size: 1.1rem;
+         font-weight: bold;
+         border: none;
+         border-radius: 6px;
+         cursor: pointer;
+         transition: background-color 0.3s ease, transform 0.2s ease;
+         width: 100%;
+         text-align: center;
+      }
+
+      .services-form button:hover {
+         background: linear-gradient(to right, #9c27b0, #ba68c8);
+         transform: translateY(-2px);
+      }
+
+
+      @media (max-width: 768px) {
+         .abouttitle h1 {
+            font-size: 2rem;
+         }
+
+         .services-form h2 {
+            font-size: 1.5rem;
+         }
+
+         .services-form .form-control {
+            font-size: 0.9rem;
+            padding: 8px;
+         }
+
+         .services-form button {
+            font-size: 1rem;
+            padding: 10px;
+         }
+      }
+
+      @media (max-width: 480px) {
+         .abouttitle h1 {
+            font-size: 1.6rem;
+         }
+
+         .services-form h2 {
+            font-size: 1.2rem;
+         }
+
+         .services-form .form-control {
+            font-size: 0.8rem;
+            padding: 8px;
+         }
+
+         .services-form button {
+            font-size: 0.9rem;
+            padding: 10px;
+         }
+      }
+   </style>
+
+</head>
+
+<body>
+
+
+   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <div class="abouttitle">
+         <h1 style="text-align: center;">Graphic Design Request Form</h1>
+      </div>
+   </div>
+   <div class="services-form">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-10 offset-md-1">
+               <form action="graphicrequests.php" method="POST" enctype="multipart/form-data">
+                  <div class="form-group">
+                     <label for="requestType">Type of Graphic Design Request</label>
+                     <select class="form-control" id="requestType" name="requestType" required>
+                        <option value="bookCover">Book Cover Design</option>
+                        <option value="bookmarkDesign">Customized Bookmark</option>
+                        <option value="other">Other</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="description">Describe Your Request</label>
+                     <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                  </div>
+                  <div class="form-group">
+                     <label for="uploadFile">Upload Reference Files (Optional)</label>
+                     <input type="file" class="form-control-file" id="uploadFile" name="uploadFile">
+                  </div>
+                  <div class="form-group">
+                     <label for="email">Your Email</label>
+                     <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="phone">Your Phone Number</label>
+                     <input type="tel" class="form-control" id="phone" name="phone" required>
+                  </div>
+                  <div class="form-group text-center">
+                     <button type="submit" class="btn btn-primary">Submit Request</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <footer>
+
+   </footer>
+
+   <script src="js/jquery.min.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/bootstrap.bundle.min.js"></script>
+   <script src="js/jquery-3.0.0.min.js"></script>
+   <script src="js/plugin.js"></script>
+   <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+   <script src="js/custom.js"></script>
+   <script src="js/html/header.js"></script>
+   <script src="js/html/footer.js"></script>
+</body>
+
+</html>
